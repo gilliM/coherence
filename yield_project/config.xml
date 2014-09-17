@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<config name="configuration file for yield plugin">
+  <groupe1 groupename="hello">
+    <groupe2 groupename="hello">
+      <layer>od_meter</layer>
+      <layer>od_installation_tank</layer>
+    </groupe2>
+  </groupe1>
+  <groupe1 groupename="world">
+    <layer>od_hydrant</layer>
+    <layer>od_wateringoutput</layer>
+    <layer>od_valve</layer>
+  </groupe1>
+</config>

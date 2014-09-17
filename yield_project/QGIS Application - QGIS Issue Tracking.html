@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>QGIS Application - QGIS Issue Tracking</title>
+<meta name="description" content="Redmine">
+<meta name="keywords" content="issue,bug,tracker">
+<link rel="shortcut icon" href="https://hub.qgis.org/favicon.ico?1322140996">
+<link href="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/application.css" media="all" rel="stylesheet" type="text/css">
+
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/prototype.js" type="text/javascript"></script>
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/effects.js" type="text/javascript"></script>
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/dragdrop.js" type="text/javascript"></script>
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/controls.js" type="text/javascript"></script>
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/application.js" type="text/javascript"></script>
+<link href="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/jstoolbar.css" media="screen" rel="stylesheet" type="text/css">
+<!--[if IE]>
+    <style type="text/css">
+      * html body{ width: expression( document.documentElement.clientWidth < 900 ? '900px' : '100%' ); }
+      body {behavior: url(/stylesheets/csshover.htc?1198879113);}
+    </style>
+<![endif]-->
+
+<!-- page specific tags -->
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar.js" type="text/javascript"></script><script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar-en.js" type="text/javascript"></script><script type="text/javascript">
+//<![CDATA[
+
+//]]>
+</script><script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar-setup.js" type="text/javascript"></script><link href="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/scm.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body class="theme-Qgis controller-issues action-new">
+<div id="wrapper">
+<div id="wrapper2">
+<div id="top-menu">
+    <div id="account">
+        <ul><li><a href="https://hub.qgis.org/my/account" class="my-account">My account</a></li>
+<li><a href="https://hub.qgis.org/logout" class="logout">Sign out</a></li></ul>    </div>
+    <div id="loggedas">Logged in as <a href="https://hub.qgis.org/users/2767">gillian</a></div>
+    <ul><li><a href="https://hub.qgis.org/" class="home">Home</a></li>
+<li><a href="https://hub.qgis.org/my/page" class="my-page">My page</a></li>
+<li><a href="https://hub.qgis.org/projects" class="projects">Projects</a></li>
+<li><a href="http://www.redmine.org/guide" class="help">Help</a></li></ul></div>
+      
+<div id="header">
+    <div id="quick-search">
+        <form action="/search/index/quantum-gis" method="get">
+        <input name="issues" value="1" type="hidden">
+        <a href="https://hub.qgis.org/search/index/quantum-gis" accesskey="4">Search</a>:
+        <input accesskey="f" class="small" id="q" name="q" size="20" type="text">
+        </form>
+        
+    </div>
+    
+    <h1><a href="https://hub.qgis.org/projects/qgis?jump=new_issue" class="root">QGIS</a> » QGIS Application</h1>
+    
+    
+    <div id="main-menu">
+        <ul><li><a href="https://hub.qgis.org/projects/quantum-gis" class="overview">Overview</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/activity" class="activity">Activity</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/roadmap" class="roadmap">Roadmap</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/issues" class="issues">Issues</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/issues/new" accesskey="7" class="new-issue selected">New issue</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/wiki" class="wiki">Wiki</a></li>
+<li><a href="https://hub.qgis.org/projects/quantum-gis/repository" class="repository">Repository</a></li></ul>
+    </div>
+    
+</div>
+
+<div class="nosidebar" id="main">
+    <div id="sidebar">        
+        
+        
+    </div>
+    
+    <div id="content">
+				
+        <h2>New issue</h2>
+
+<form action="/projects/quantum-gis/issues" class="tabular new-issue-form" enctype="multipart/form-data" id="issue-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="authenticity_token" value="HbV6RpZvjFE5lJ/6tf0o4Rz/jLz368KyBL9acpD/LHI=" type="hidden"></div>
+    
+    <div class="box">
+    
+
+<div id="issue_descr_fields">
+<p><label for="issue_tracker_id">Tracker<span class="required"> *</span></label><select id="issue_tracker_id" name="issue[tracker_id]"><option value="1" selected="selected">Bug report</option>
+<option value="2">Feature request</option></select></p>
+<script type="text/javascript">
+//<![CDATA[
+new Form.Element.EventObserver('issue_tracker_id', function(element, value) {new Ajax.Updater('attributes', '/projects/quantum-gis/issues/new?id=', {asynchronous:true, evalScripts:true, parameters:Form.serialize('issue-form') + '&authenticity_token=' + encodeURIComponent('HbV6RpZvjFE5lJ/6tf0o4Rz/jLz368KyBL9acpD/LHI=')})})
+//]]>
+</script>
+
+<p><label for="issue_subject">Subject<span class="required"> *</span></label><input id="issue_subject" name="issue[subject]" size="80" value="listStylesInDatabase in pyqgis" type="text"></p>
+                                     
+
+
+<p><label for="issue_description">Description</label><div class="jstElements"><div class="help">Text formatting: <a href="https://hub.qgis.org/help/wiki_syntax.html" onclick='window.open("/help/wiki_syntax.html", "", "resizable=yes, location=no, width=300, height=640, menubar=no, status=no, scrollbars=yes"); return false;'>Help</a></div><button title="Strong" class="jstb_strong" tabindex="200" type="button"><span>Strong</span></button><button title="Italic" class="jstb_em" tabindex="200" type="button"><span>Italic</span></button><button title="Underline" class="jstb_ins" tabindex="200" type="button"><span>Underline</span></button><button title="Deleted" class="jstb_del" tabindex="200" type="button"><span>Deleted</span></button><button title="Inline Code" class="jstb_code" tabindex="200" type="button"><span>Inline Code</span></button><span class="jstSpacer" id="space1">&nbsp;</span><button title="Heading 1" class="jstb_h1" tabindex="200" type="button"><span>Heading 1</span></button><button title="Heading 2" class="jstb_h2" tabindex="200" type="button"><span>Heading 2</span></button><button title="Heading 3" class="jstb_h3" tabindex="200" type="button"><span>Heading 3</span></button><span class="jstSpacer" id="space2">&nbsp;</span><button title="Unordered list" class="jstb_ul" tabindex="200" type="button"><span>Unordered list</span></button><button title="Ordered list" class="jstb_ol" tabindex="200" type="button"><span>Ordered list</span></button><span class="jstSpacer" id="space3">&nbsp;</span><button title="Quote" class="jstb_bq" tabindex="200" type="button"><span>Quote</span></button><button title="Remove Quote" class="jstb_unbq" tabindex="200" type="button"><span>Remove Quote</span></button><button title="Preformatted text" class="jstb_pre" tabindex="200" type="button"><span>Preformatted text</span></button><span class="jstSpacer" id="space4">&nbsp;</span><button title="Link to a Wiki page" class="jstb_link" tabindex="200" type="button"><span>Link to a Wiki page</span></button><button title="Image" class="jstb_img" tabindex="200" type="button"><span>Image</span></button></div><div class="jstEditor"><textarea accesskey="e" class="wiki-edit" cols="60" id="issue_description" name="issue[description]" rows="10">The
+ function layer.listStylesInDatabase return empty string lists in 
+pyqgis. I have my style in database (checked), i can load it (checked) 
+and listStylesInDatabase return non zero integer (my style exist in 
+database).
+
+int QgsVectorLayer::listStylesInDatabase 	( 	QStringList &amp;  	ids,
+		QStringList &amp;  	names,
+		QStringList &amp;  	descriptions,
+		QString &amp;  	msgError 
+	)</textarea></div><div class="jstHandle"></div></p>
+</div>
+
+<div id="attributes" class="attributes">
+	
+
+<div class="splitcontentleft">
+
+<p><label for="issue_status_id">Status<span class="required"> *</span></label><select id="issue_status_id" name="issue[status_id]"><option value="1" selected="selected">Open</option>
+<option value="5">Closed</option></select></p>
+
+
+<p><label for="issue_priority_id">Priority<span class="required"> *</span></label><select id="issue_priority_id" name="issue[priority_id]"><option value="3">Low</option>
+<option value="4" selected="selected">Normal</option>
+<option value="5">High</option>
+<option value="10">Blocker</option></select></p>
+<p><label for="issue_assigned_to_id">Assigned to</label><select id="issue_assigned_to_id" name="issue[assigned_to_id]"><option selected="selected" value=""></option>
+<option value="15">Alessandro Pasotti</option>
+<option value="4">Alex Mandel</option>
+<option value="173">Alexander Bruy</option>
+<option value="465">alicebtoklas -</option>
+<option value="452">Alister Hood</option>
+<option value="236">alobo -</option>
+<option value="2001">Alvaro Huarte</option>
+<option value="655">andre mano</option>
+<option value="26">Andreas Neumann</option>
+<option value="746">andskog -</option>
+<option value="17">Anita Graser</option>
+<option value="561">aperi2007 -</option>
+<option value="70">Aren Cambre</option>
+<option value="388">arkygeek -</option>
+<option value="435">artfwo -</option>
+<option value="1004">Arunmozhi P</option>
+<option value="37">balazovic-mailbox-sk -</option>
+<option value="389">barryrowlingson -</option>
+<option value="511">bderstine -</option>
+<option value="493">belg4mit -</option>
+<option value="739">Benoit de Cabissole</option>
+<option value="331">Bernhard Ströbl</option>
+<option value="905">Bill Clay</option>
+<option value="373">bjpfei -</option>
+<option value="89">Borys Jurgiel</option>
+<option value="33">Brendan Morley -</option>
+<option value="295">browlingson -</option>
+<option value="305">cdavila -</option>
+<option value="132">cdavilam -</option>
+<option value="319">cfarmer -</option>
+<option value="299">cgs_bob -</option>
+<option value="335">cgsbob -</option>
+<option value="607">Chris Crook</option>
+<option value="411">cmoe -</option>
+<option value="393">craigleat -</option>
+<option value="147">creeping -</option>
+<option value="539">dassouki -</option>
+<option value="316">David A- Riggs -</option>
+<option value="1031">Denis Rouzaud</option>
+<option value="584">dmartella -</option>
+<option value="40">doktoreas -</option>
+<option value="458">Donkagen2 -</option>
+<option value="336">dr -</option>
+<option value="797">elcuco -</option>
+<option value="1653">Emilio Loi</option>
+<option value="503">epifanio -</option>
+<option value="228">ersts-amnh-org -</option>
+<option value="1141">Etienne Tourigny</option>
+<option value="317">Fernando Pacheco -</option>
+<option value="657">fhof -</option>
+<option value="1037">Filipe Dias</option>
+<option value="109">Frank Warmerdam -</option>
+<option value="13">Gary Sherman</option>
+<option value="391">Gavin Fleming</option>
+<option value="28">Gavin Macaulay -</option>
+<option value="312">gburns -</option>
+<option value="404">gcarrillo -</option>
+<option value="414">Gerhard Spieles</option>
+<option value="2767">gillian milani</option>
+<option value="86">Giovanni Allegri</option>
+<option value="11">Giovanni Manghi</option>
+<option value="14">Giuseppe Sucameli</option>
+<option value="67">gjm -</option>
+<option value="22">Gregorio Díaz-Marta Mateos</option>
+<option value="61">hamish -</option>
+<option value="72">hamish_nospam-yahoo-com -</option>
+<option value="190">hartmut-tschauner-gmail-com -</option>
+<option value="78">holl-gdf-hannover-de -</option>
+<option value="18">Horst Düster</option>
+<option value="108">horst-duester -</option>
+<option value="1265">Hugo Mercier</option>
+<option value="463">Ilija Milicevic -</option>
+<option value="684">infobleep -</option>
+<option value="323">Ivan Mincik</option>
+<option value="258">jaadfoo -</option>
+<option value="496">jachym -</option>
+<option value="333">Jean-Roc Morreale</option>
+<option value="591">jekhor -</option>
+<option value="97">Jeremy Palmer</option>
+<option value="633">Jhelebrant -</option>
+<option value="455">joe larson -</option>
+<option value="21">John Tull</option>
+<option value="197">john-craddock-xitech-com-au -</option>
+<option value="1187">Julien Malik</option>
+<option value="35">Jürgen Fischer</option>
+<option value="504">kumba -</option>
+<option value="100">lami-faunalia-it -</option>
+<option value="1030">Larry Shaffer</option>
+<option value="54">leo-lami -</option>
+<option value="65">leolami -</option>
+<option value="50">Lorenzo Masini</option>
+<option value="449">lroubeyrie -</option>
+<option value="547">Luca Casagrande</option>
+<option value="19">Luca Delucchi</option>
+<option value="38">luca76 -</option>
+<option value="1821">Luigi Pirelli</option>
+<option value="16">Luiz Motta</option>
+<option value="36">Maciej Sieczka -</option>
+<option value="76">Magnus Homann</option>
+<option value="203">maiellaro-itc-cnr-it -</option>
+<option value="8">Marco Bernasocchi</option>
+<option value="42">Marco Hugentobler</option>
+<option value="454">Marco Lechner</option>
+<option value="152">maris-gis-gmail-com -</option>
+<option value="119">marisn -</option>
+<option value="66">Markus Neteler -</option>
+<option value="24">Martin Dobias</option>
+<option value="32">Mateusz Loskot -</option>
+<option value="652">Mathieu Pellerin - nIRV</option>
+<option value="300">matter -</option>
+<option value="1246">Matthias Kuhn</option>
+<option value="337">Maxim Dubinin</option>
+<option value="25">Mayeul Kauffmann</option>
+<option value="321">mesajs -</option>
+<option value="354">Micha Silver</option>
+<option value="6">Michael Douchin</option>
+<option value="60">Mike Toews</option>
+<option value="2041">Mikhail Tchernychev</option>
+<option value="118">Milena Nowotarska</option>
+<option value="87">mlennert -</option>
+<option value="307">mmassing -</option>
+<option value="382">morgan -</option>
+<option value="415">Médéric RIBREUX</option>
+<option value="5">Nathan Woodrow</option>
+<option value="34">neteler-itc-it -</option>
+<option value="242">nikos -</option>
+<option value="1598">Nyall Dawson</option>
+<option value="255">Otto Dassau</option>
+<option value="610">pablotcarreira -</option>
+<option value="10">Paolo Cavallini</option>
+<option value="129">pascal-ferrand-tiscali-fr -</option>
+<option value="573">Patrice Vetsel -</option>
+<option value="371">paull -</option>
+<option value="83">pcreso-pcreso-com -</option>
+<option value="157">perrygeo -</option>
+<option value="536">peterk -</option>
+<option value="604">pinux -</option>
+<option value="3">Pirmin Kalberer</option>
+<option value="361">pls -</option>
+<option value="1269">QGIS Translation Team</option>
+<option value="48">Radim Blazek</option>
+<option value="1">Redmine Admin</option>
+<option value="1147">René-Luc ReLuc</option>
+<option value="174">rhys-stewart-gmail-com -</option>
+<option value="12">Ricardo Silva</option>
+<option value="353">Richard Duivenvoorde</option>
+<option value="397">rpeskin -</option>
+<option value="1111">Salvatore Larosa</option>
+<option value="593">Sandro Furieri</option>
+<option value="453">Sandro Santilli</option>
+<option value="622">ScottParker -</option>
+<option value="737">Sergey  Yakushev</option>
+<option value="612">Sfkeller -</option>
+<option value="358">shader -</option>
+<option value="297">silfreed-silfreed-net -</option>
+<option value="525">sowelu -</option>
+<option value="62">springmeyer -</option>
+<option value="96">stephan-holl-intevation-de -</option>
+<option value="47">Steven Bell -</option>
+<option value="325">Steven Mizuno</option>
+<option value="376">str238 -</option>
+<option value="1161">Tamas Szekeres</option>
+<option value="709">Thaddeus -</option>
+<option value="969">Till Adams</option>
+<option value="7">Tim Sutton</option>
+<option value="403">timmie -</option>
+<option value="177">Tom Kralidis</option>
+<option value="562">torstenosgeo -</option>
+<option value="94">venturato-faunalia-it -</option>
+<option value="1163">Victor Olaya</option>
+<option value="1582">vinayan Parameswaran</option>
+<option value="461">vince -</option>
+<option value="1859">Vincent Mora</option>
+<option value="23">Vincent Picavet</option>
+<option value="110">Volker Fröhlich</option>
+<option value="592">vrgsmm01 -</option>
+<option value="57">werchowyna-epf-pl -</option>
+<option value="9">Werner Macho</option>
+<option value="167">William Kyngesburye</option>
+<option value="142">wolfgang-qual-gmx-net -</option>
+<option value="68">Yves Jacolin</option>
+<option value="420">zachariahyoder -</option>
+<option value="544">zicke -</option></select></p>
+
+<p><label for="issue_category_id">Category</label><select id="issue_category_id" name="issue[category_id]"><option value=""></option>
+<option value="102">Attribute table</option>
+<option value="55">Browser (QGIS Desktop)</option>
+<option value="95">Browser (Standalone)</option>
+<option value="28">Build / Install</option>
+<option value="40">C++ Plugins</option>
+<option value="111">C++ plugins/evis</option>
+<option value="108">C++ plugins/georeferencer</option>
+<option value="110">C++ plugins/GPS plugin</option>
+<option value="114">C++ plugins/heatmap</option>
+<option value="116">C++ plugins/interpolation</option>
+<option value="109">C++ plugins/offline editing</option>
+<option value="113">C++ plugins/roadgraph</option>
+<option value="112">C++ plugins/Topology checker</option>
+<option value="115">C++ plugins/zonalstats</option>
+<option value="80">Customisation Framework</option>
+<option value="29">Data Provider</option>
+<option value="73">DBManager</option>
+<option value="96">Delimited Text Data Provider</option>
+<option value="106">Diagrams</option>
+<option value="30">Digitising</option>
+<option value="41">Documentation and Help</option>
+<option value="101">DXF export</option>
+<option value="104">Edit widget</option>
+<option value="98">Expressions</option>
+<option value="103">Forms</option>
+<option value="44">fTools</option>
+<option value="45">GDALTools</option>
+<option value="50">Globe</option>
+<option value="42">GRASS</option>
+<option value="27">GUI</option>
+<option value="54">Labelling</option>
+<option value="31">Map Canvas</option>
+<option value="90">Map Composer / Printing</option>
+<option value="32">Map Legend</option>
+<option value="49">Mapserver (QGIS Server)</option>
+<option value="107">MetaSearch Catalogue Client</option>
+<option value="70">MSSQL Data Provider</option>
+<option value="97">Network</option>
+<option value="93">OGR Data Provider</option>
+<option value="89">Oracle Data Provider</option>
+<option value="91">Plugin Manager</option>
+<option value="51">PostGIS Data Provider</option>
+<option value="94">Processing (SEXTANTE)</option>
+<option value="35">Project Loading / Saving</option>
+<option value="34">Projection Support</option>
+<option value="92">PyQGIS Console</option>
+<option selected="selected" value="39">Python plugins and bindings</option>
+<option value="100">Raster Calculator</option>
+<option value="36">Rasters</option>
+<option value="105">Relations</option>
+<option value="117">Simplification</option>
+<option value="85">SpatiaLite Data Provider</option>
+<option value="37">Symbology</option>
+<option value="38">Translations and international</option>
+<option value="43">Vectors</option>
+<option value="118">Virtual Fields</option>
+<option value="82">WCS Client</option>
+<option value="46">WFS Client</option>
+<option value="99">Windows Package</option>
+<option value="47">WMS Client</option></select>
+</p>
+
+
+<p><label for="issue_fixed_version_id">Target version</label><select id="issue_fixed_version_id" name="issue[fixed_version_id]"><option value=""></option>
+<option selected="selected" value="55">Future Release - High Priority</option>
+<option value="75">Future Release - Lower Priority</option>
+<option value="54">Future Release - Nice to have</option>
+<option value="95">Version 2.6</option></select>
+
+</p>
+
+</div>
+
+<div class="splitcontentright">
+<p><label for="issue_start_date">Start Date</label><input id="issue_start_date" name="issue[start_date]" size="10" value="2014-09-15" type="text"><img alt="Calendar" class="calendar-trigger" id="issue_start_date_trigger" src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar.png"><script type="text/javascript">
+//<![CDATA[
+Calendar.setup({inputField : 'issue_start_date', ifFormat : '%Y-%m-%d', button : 'issue_start_date_trigger' });
+//]]>
+</script></p>
+<p><label for="issue_due_date">Due date</label><input id="issue_due_date" name="issue[due_date]" size="10" type="text"><img alt="Calendar" class="calendar-trigger" id="issue_due_date_trigger" src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/calendar.png"><script type="text/javascript">
+//<![CDATA[
+Calendar.setup({inputField : 'issue_due_date', ifFormat : '%Y-%m-%d', button : 'issue_due_date_trigger' });
+//]]>
+</script></p>
+<p><label for="issue_estimated_hours">Estimated time</label><input value="0.5" id="issue_estimated_hours" name="issue[estimated_hours]" size="3" type="text"> Hours</p>
+
+<p><label for="issue_done_ratio">% Done</label><select id="issue_done_ratio" name="issue[done_ratio]"><option value="0" selected="selected">0 %</option>
+<option value="10">10 %</option>
+<option value="20">20 %</option>
+<option value="30">30 %</option>
+<option value="40">40 %</option>
+<option value="50">50 %</option>
+<option value="60">60 %</option>
+<option value="70">70 %</option>
+<option value="80">80 %</option>
+<option value="90">90 %</option>
+<option value="100">100 %</option></select></p>
+
+</div>
+
+<div style="clear:both;"> </div>
+<div class="splitcontentleft">
+
+
+
+	<p><label for="issue_custom_field_values_2">Platform</label><input value="ubuntu" id="issue_custom_field_values_2" name="issue[custom_field_values][2]" type="text"></p>
+
+	<p><label for="issue_custom_field_values_3">Platform version</label><input value="14.04" id="issue_custom_field_values_3" name="issue[custom_field_values][3]" type="text"></p>
+
+	<p><label for="issue_custom_field_values_4">Status info</label><input id="issue_custom_field_values_4" name="issue[custom_field_values][4]" type="text"></p>
+
+	<p><label for="issue_custom_field_values_5">Resolution</label><select id="issue_custom_field_values_5" name="issue[custom_field_values][5]"><option selected="selected"></option><option value="fixed/implemented">fixed/implemented</option>
+<option value="invalid">invalid</option>
+<option value="wontfix">wontfix</option>
+<option value="duplicate">duplicate</option>
+<option value="worksforme">worksforme</option>
+<option value="up/downstream">up/downstream</option></select></p>
+</div><div class="splitcontentright">
+
+	<p><label for="issue_custom_field_values_8">Patch supplied</label><input id="issue_custom_field_values_8" name="issue[custom_field_values][8]" value="0" type="hidden"><input id="issue_custom_field_values_8" name="issue[custom_field_values][8]" value="1" type="checkbox"></p>
+
+	<p><label for="issue_custom_field_values_9">Affected version <span class="required">*</span></label><select id="issue_custom_field_values_9" name="issue[custom_field_values][9]"><option value="1.7.3">1.7.3</option>
+<option value="1.7.4">1.7.4</option>
+<option value="1.8.0">1.8.0</option>
+<option value="2.0.1">2.0.1</option>
+<option value="2.2.0">2.2.0</option>
+<option value="2.4.0">2.4.0</option>
+<option selected="selected" value="master">master</option></select></p>
+
+	<p><label for="issue_custom_field_values_10">Causes crash or corruption</label><input id="issue_custom_field_values_10" name="issue[custom_field_values][10]" value="0" type="hidden"><input id="issue_custom_field_values_10" name="issue[custom_field_values][10]" value="1" type="checkbox"></p>
+
+	<p><label for="issue_custom_field_values_11">Tag</label><input id="issue_custom_field_values_11" name="issue[custom_field_values][11]" value="style, database" type="text"></p>
+</div>
+<div style="clear:both;"> </div>
+
+
+
+
+</div>
+
+
+<p id="attachments_form"><label for="attachments_1_file">Files</label><span id="attachments_fields">
+<input name="attachments[1][file]" size="30" type="file"><label class="inline"><span id="attachment_description_label_content">Optional description</span><input name="attachments[1][description]" size="60" type="text">
+</label>
+</span>
+<br>
+<small><a href="#" onclick="addFileField(); return false;">Add another file</a>
+(Maximum size: 5 MB)
+</small>
+</p>
+
+
+
+
+
+
+<script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/jstoolbar.js" type="text/javascript"></script><script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/textile.js" type="text/javascript"></script><script src="QGIS%20Application%20-%20QGIS%20Issue%20Tracking_files/jstoolbar-en.js" type="text/javascript"></script><script type="text/javascript">
+//<![CDATA[
+var wikiToolbar = new jsToolBar($('issue_description')); wikiToolbar.setHelpLink('Text formatting: <a href="/help/wiki_syntax.html" onclick="window.open(&quot;/help/wiki_syntax.html&quot;, &quot;&quot;, &quot;resizable=yes, location=no, width=300, height=640, menubar=no, status=no, scrollbars=yes&quot;); return false;">Help</a>'); wikiToolbar.draw();
+//]]>
+</script>
+
+    </div>
+    <input name="commit" value="Create" type="submit">
+    <input name="continue" value="Create and continue" type="submit">
+    <a accesskey="r" href="#" onclick="new Ajax.Updater('preview', '/issues/preview?project_id=quantum-gis', {asynchronous:true, evalScripts:true, method:'post', onComplete:function(request){Element.scrollTo('preview')}, parameters:Form.serialize('issue-form') + '&amp;authenticity_token=' + encodeURIComponent('HbV6RpZvjFE5lJ/6tf0o4Rz/jLz368KyBL9acpD/LHI=')}); return false;">Preview</a>
+											 
+		<script type="text/javascript">
+//<![CDATA[
+Form.Element.focus('issue_subject');
+//]]>
+</script>
+</form>
+
+<div id="preview" class="wiki"></div>
+
+
+
+        
+				<div style="clear:both;"></div>
+    </div>
+</div>
+
+<div id="ajax-indicator" style="display:none;"><span>Loading...</span></div>
+	
+<div id="footer">
+  <div class="bgl"><div class="bgr">
+    Powered by <a href="http://www.redmine.org/">Redmine</a> © 2006-2010 Jean-Philippe Lang
+  </div></div>
+</div>
+</div>
+</div>
+
+
+
+</body></html>

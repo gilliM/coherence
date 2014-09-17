@@ -1,0 +1,181 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<config name="configuration file for yield plugin">
+
+  <grouplayers groupename="Rseau">
+    <layer>ouvrages</layer>                
+
+    <layer>Elments ponctuels</layer>                
+
+    <layer>Abonns</layer>                
+
+    <layer>Noeuds</layer>                
+
+    <layer>Conduites</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Schmatique">
+    <layer>pipe_child_parent20130417092030507</layer>                
+
+    <layer>valve_schema20130304110011584</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Annotations">
+    <layer>od_annotationline20131203095020365</layer>                
+
+    <layer>od_annotationpoint20131203095020392</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Ctes">
+    <layer>dimension20130807094904783</layer>                
+
+    <layer>od_dimension_orientation20131202111155806</layer>                
+
+    <layer>constructionpoint20130807094904851</layer>                
+
+    <layer>IntersectIt_Lines20130618102142813</layer>                
+
+    <layer>IntersectIt_Points20130618102143276</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Zones">
+    <layer>district20130304110004764</layer>                
+
+    <layer>pressurezone20130417133612105</layer>                
+
+    <layer>printmap20130304110011400</layer>                
+
+    <layer>protectionzone20130304110011418</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Plans">
+    <layer>CN</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Tables auxiliaires">
+    <layer>vl_subscriber_type20130304110011480</layer>                
+
+    <layer>vl_pipe_protection20130304110005258</layer>                
+
+    <layer>vl_pipe_material20130304110005230</layer>                
+
+    <layer>vl_pipe_installmethod20130304110005209</layer>                
+
+    <layer>vl_pipe_function20130304110005186</layer>                
+
+    <layer>distributor20130304114719702</layer>                
+
+    <layer>vl_leak_cause20130822081237639</layer>                
+
+    <layer>vl_leak_type20130822081237675</layer>                
+
+    <layer>vl_leak_damage20130822081237691</layer>                
+
+    <layer>logged_actions20130304110005081</layer>                
+
+    <layer>hydrant_provider20130304110004893</layer>                
+
+    <layer>vl_installation_type20130514104730101</layer>                
+
+    <layer>vl_pumptype20130816140237776</layer>                
+
+    <layer>vl_overflow20130304170704046</layer>                
+
+    <layer>vl_tank_firestorage20130304170704030</layer>                
+
+    <layer>vl_cistern20130304110005061</layer>                
+
+    <layer>vl_sourcequality20130820110518810</layer>                
+
+    <layer>vl_sourcetype20130820110518791</layer>                
+
+    <layer>vl_installationpart_type20140429114640509</layer>                
+
+    <layer>vl_precision20130304110011372</layer>                
+
+    <layer>vl_precisionalti20131211161429510</layer>                
+
+    <layer>vl_remote20130304110004987</layer>                
+
+    <layer>vl_watertype20131217141603877</layer>                
+
+    <layer>vl_valve_maintenance20130304110011567</layer>                
+
+    <layer>vl_valve_type20130304110011685</layer>                
+
+    <layer>vl_valve_function20130304110011544</layer>                
+
+    <layer>vl_visible20130304110011703</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="enquetes">
+  </grouplayers>
+  <grouplayers groupename="riviera_base">
+  </grouplayers>
+  <grouplayers groupename="riviera_complment">
+  </grouplayers>
+  <grouplayers groupename="valais_base">
+  </grouplayers>
+  <grouplayers groupename="ouvrages">
+    <layer>installation20130304110004938</layer>                
+
+    <layer>dtail</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Elments ponctuels">
+    <layer>hydrant20130304110004848</layer>                
+
+    <layer>valve20130304110011497</layer>                
+
+    <layer>vannes_copy20130924083714343</layer>                
+
+    <layer>od_wateringoutput20131127080906318</layer>                
+
+    <layer>leak20130821111917060</layer>                
+
+    <layer>subscriber_pipe_relation20130417092124312</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Abonns">
+    <layer>subscriber20130304110011459</layer>                
+
+    <layer>od_subscriber_reference20131206105928067</layer>                
+
+    <layer>od_meter20131120073630165</layer>                
+
+    <layer>od_meter_reference20140304165835390</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Noeuds">
+    <layer>od_installationpart20140429113327995</layer>                
+
+    <layer>node20130304110005126</layer>                
+
+    <layer>od_node20140116161508743</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="Conduites">
+    <layer>conduites_copy20130709141244955</layer>                
+
+    <layer>conduites_actives_copy_copy20130822080032346</layer>                
+
+    <layer>conduites_actives_copy20130822080028511</layer>                
+
+  </grouplayers>
+  <grouplayers groupename="CN">
+  </grouplayers>
+  <grouplayers groupename="dtail">
+    <layer>installation_tank20130304110005008</layer>                
+
+    <layer>installation_source20130820110331647</layer>                
+
+    <layer>installation_pump20130816140237750</layer>                
+
+    <layer>installation_treatment20130816113039913</layer>                
+
+    <layer>installation_pressurecontrol20131107105006792</layer>                
+
+    <layer>installation_valvechamber20131107105006707</layer>                
+
+  </grouplayers>
+</config>
