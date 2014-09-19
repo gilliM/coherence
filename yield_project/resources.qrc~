@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/plugins/coherenceProject" >
-        <file>icon.png</file>
-    </qresource>
-</RCC>
