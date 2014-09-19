@@ -47,6 +47,10 @@ coherenceDialog
 import os
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+from qgis.core import *
+from qgis.gui import *
 from PyQt4 import QtXml
 from yield_module_dialog_base import Ui_YieldDialogBase
 from PyQt4.QtSql import *
@@ -77,63 +81,144 @@ class yieldMainWindow(QtGui.QMainWindow):
         self.ui.reloadLayersButton.clicked.connect(self.reloadLayers)
         self.ui.refreshStructureButton.clicked.connect(self.refreshStructure)
         self.ui.checkStructureButton.clicked.connect(self.checkStructure)
+        self.ui.configureInterfaceButton.clicked.connect(self.configureInterface)
         self.dictLegendRefBySource = {}
         self.dictSourceRefByLegend = {}
         
-        print QtGui.QStyleFactory.keys()
         self.ui.textEdit.setStyle(QtGui.QStyleFactory.create('Motif'))
+        self.center()
     
     def closeEvent(self,e):
-        print "close"
         self.db.close()
         self.db.removeDatabase("first2")
-                    
+        
+    def keyPressEvent(self, e):
+        if e.key() == QtCore.Qt.Key_Escape:
+            self.close()
+            
+    def configureInterface(self):
+        att = 'remark'
+        self.tabs = []
+        self.groups = []
+        self.widgets = []
+        for name, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
+            layer.clearAttributeEditorWidgets()
+            layer.setEditorLayout(1)
+            self.tabs.append(QgsAttributeEditorContainer("Tab 1", layer))
+            fields =  layer.pendingFields()
+            for field in fields:
+                self.widgets.append(QgsAttributeEditorField(field.name()\
+                                    , layer.fieldNameIndex(field.name())\
+                                    , layer))
+                self.tabs[-1].addChildElement(self.widgets[-1])
+            layer.addAttributeEditorWidget(self.tabs[-1])
+        
+    
+    def getNodes(self, node, parent = None):
+        if parent == 'source' or parent == 'name' or parent == 'symbology':
+            text =  node.firstChild().toText().data()
+        else:
+            text = []
+            n = node.firstChild()
+            while (not n.isNull()):
+                t = n.nodeName()
+                if n.nodeType() == 1:
+                    rec = self.getNodes(n, t)
+                    if n.toElement().hasAttribute('groupname'):
+                        name =  n.toElement().attribute('groupname')
+                        group = [t, rec, name]
+                        self.barCount += 1
+                    else:
+                        group = [t, rec]
+                    text.append(group)
+                n = n.nextSibling()
+        return text
+    
+    def addGroups(self, list, parent = None):
+        for group1 in list:
+                if group1[0] != 'layer':
+                    if len(group1) > 2:
+                        index = self.iface.legendInterface().addGroup(group1[2], True, parent)
+                    else:
+                        index = self.iface.legendInterface().addGroup(group1[0], True, parent)
+                    self.addGroups(group1[1], index)
+                else:
+                    dicInfoLayer = dict((key, value) for (key, value) in group1[1])
+                    if 'source' not in dicInfoLayer:
+                        QMessageBox.warning(QDialog(),'configuration', "Source not defined for a layer")
+                        raise IOError
+                    source = dicInfoLayer['source']
+                    layer = self.loadTable(source)
+                    self.iface.legendInterface().moveLayer(layer, parent)
+                    if 'name' in dicInfoLayer:
+                        nomTemp = dicInfoLayer['name']
+                        nom = ''.join(chr(ord(c)) for c in nomTemp).decode('utf8')
+                        layer.setLayerName(nom)
+                    if 'symbology' in dicInfoLayer:
+                        style = dicInfoLayer['symbology']
+                        self.getSymbology(layer, style)
+                        
     def reloadLayers(self):
         self.tables = []
+        self.vlayer = []
+        self.barCount = 0
+        self.loadSymbologies()
+        # Clear legend
         for name, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
             QgsMapLayerRegistry.instance().removeMapLayer(name)
-                
-        nTable = 0
-        text = "SELECT table_name FROM information_schema.tables WHERE table_schema='distribution';"
-        query = QSqlQuery(self.db) ;
-        test = query.exec_(text);
-        while (query.next()) and nTable < 1000:
-            i = 0
-            while (query.value(i) is not None): 
-                val = str(query.value(i))
-                self.tables.append(val)
-                i = i +1
-            nTable +=1
-
-        self.vlayer = []
-        bar = progress_bar();bar.center();bar.show()
-        bar.progressBar = bar.ui_progbar.progressBar
-        bar.progressBar.setValue(0)
-        barProgress = 0; inc = 1.0/len(self.tables)*100.0 
-
-        for table in self.tables:
-            self.loadTable(table)
-            bar.progressBar.setValue(barProgress)
-            barProgress = barProgress + inc
-        bar = None
+        while self.iface.legendInterface().groupExists(0):
+                self.iface.legendInterface().removeGroup(0)        
         
-        text = "SELECT id, f_table_name, description FROM public.layer_styles";
-        query = QSqlQuery(self.db) ;
-        test = query.exec_(text);
-        dicStyle = {}
-        while (query.next()):
-            i = 0
-            dicStyle[query.value(1)] =query.value(0)
-            
-        errorMsg = []
-        """
-        for name, layer in layers.iteritems():
-            id = dicStyle[layer.name()] 
-            styleText = layer.getStyleFromDatabase(str(id),errorMsg)
-            layer.applyNamedStyle(styleText,a)"""
-                
+        path = os.path.dirname(os.path.realpath(__file__))
+        fName =  path + "/config.xml"
+        if not fName:
+            return
+        file=QFile(fName)
+        if (not file.open(QIODevice.ReadOnly | QIODevice.Text)):
+            QMessageBox.warning(QDialog(),'Application', "Cannot read file %s :\n%s."\
+                                %(file.fileName(),file.errorString()))
+            return False
+        else:
+            doc = QtXml.QDomDocument("EnvironmentML");
+            if(not doc.setContent(file)):
+                file.close()
+                QMessageBox.warning(self,"Error","Could not parse xml file.")
+            file.close()
+            root = doc.documentElement();
+            if(root.tagName()!="config"):
+                 QMessageBox.warning(self,"Error","Could not parse xml file. Root Element must be <kml/>.")
+            else:
+                #try:
+                t = self.getNodes(root)
+                self.initProgressBar()        # create progressbar
+                self.addGroups(t)
+                #except:
+                #    QMessageBox.warning(self,"Configuration failed","Failed to read the configuration file correctly")
+                #    return
+        self.bar = None
         QtGui.QMessageBox.information(QtGui.QDialog(), "Reloading layers", "Layers are succesfully reloaded")            
         
+        
+    def loadSymbologies(self):
+        text = "SELECT id, stylename, description FROM public.layer_styles";
+        query = QSqlQuery(self.db) ;
+        test = query.exec_(text);
+        self.dicStyle = {}
+        while (query.next()):
+            i = 0
+            self.dicStyle[query.value(1)] = query.value(0)
+            
+    def getSymbology(self, layer, styleName):
+        errorMsg = ''
+        print self.dicStyle
+        if styleName in self.dicStyle:
+            id = self.dicStyle[styleName] 
+            styleText = layer.getStyleFromDatabase(str(id),errorMsg)
+            layer.applyNamedStyle(styleText,errorMsg)
+        else:
+            QMessageBox.warning(QDialog(),'Configuration', "Symbology %s not present in database"%styleName)
+            raise IOError
+             
     def loadTable(self, table):
         QtCore.QCoreApplication.processEvents()
         uri = QgsDataSourceURI()
@@ -146,9 +231,12 @@ class yieldMainWindow(QtGui.QMainWindow):
         self.vlayer.append(QgsVectorLayer(uri.uri(), table, "postgres"))
         inst = QgsMapLayerRegistry.instance()
         legend = self.iface.legendInterface()
-        inst.addMapLayer(self.vlayer[-1])
+        layer = inst.addMapLayer(self.vlayer[-1])
         legend.setLayerVisible(self.vlayer[-1],False)
         self.iface.mapCanvas().refresh()
+        self.bar.progressBar.setValue(self.progress)
+        self.progress += self.barInc
+        return layer
         
 
     def refreshProjectInfo(self):
@@ -219,7 +307,6 @@ class yieldMainWindow(QtGui.QMainWindow):
             self.createActionDictionary()
             self.applyActions()
             QtGui.QMessageBox.information(QtGui.QDialog(), "Change in QGIS project", "Number of modifications applied: %s"%self.changeCount)
-
     
     def createActionDictionary(self):
         self.actionDictionary = {}
@@ -274,6 +361,12 @@ class yieldMainWindow(QtGui.QMainWindow):
                                 elif element == 'RelationValue':
                                     config = layer.editorWidgetV2Config(id)
                                     config[u'Value'] = elementConfig
+                                    layer.setEditorWidgetV2Config(id, config)
+                                if elementConfig == 'DateTime': 
+                                    config = layer.editorWidgetV2Config(id)
+                                    config[u'display_format'] = u'dd/MM/yy'
+                                    config[u'field_format'] = 'yyyy-MM-dd'
+                                    config[u'calendar_popup'] = True
                                     layer.setEditorWidgetV2Config(id, config)
                                    # print layer.editorWidgetV2Config(id)
                             # All fields are, by default, editable. Then depending on type, we will change it!
@@ -452,7 +545,7 @@ class yieldMainWindow(QtGui.QMainWindow):
                             layer.setFieldEditable(id,True)
                             config = {}
                             # DPFE rule
-                            if field.name().startswith('tr_'):
+                            if field.name().startswith('tr_') or type == 'primaryKey':
                                 layer.setEditorWidgetV2(id,'TextEdit')
                                 layer.setFieldEditable(id,False)
                                 
@@ -494,14 +587,9 @@ class yieldMainWindow(QtGui.QMainWindow):
                                 config[u'UseHtml'] = False
                                 config[u'IsMultiline'] = True
                             if type == 'date':
-                                print layer.editorWidgetV2Config(id)
                                 config[u'display_format'] = u'dd/MM/yy'
                                 config[u'field_format'] = 'yyyy-MM-dd'
                                 config[u'calendar_popup'] = True
-                            if field.name() == 'id':
-                                layer.setFieldEditable(id,False)
-                            if field.name().startswith('tr_'):
-                                layer.setFieldEditable(id,False)
                             layer.setEditorWidgetV2Config(id, config)
                             id +=1
         return
@@ -514,6 +602,9 @@ class yieldMainWindow(QtGui.QMainWindow):
                 if (table, att) in dCom:
                     widget = 'ValueRelation'
                     values = dCom[table, att]
+                elif type == 'primaryKey':
+                    widget = 'TextEdit'
+                    values = None
                 elif type == 'boolean':
                     # It is important to have the bool check after the foreignKey check.
                     # Because some bollean fields-type need a combo box (Null, True or False)
@@ -534,18 +625,32 @@ class yieldMainWindow(QtGui.QMainWindow):
         dicAtt = {}
         dicType = {}
         for table in self.tables:
-            attributesList = []
+            textPM = """SELECT pg_attribute.attname
+FROM pg_index, pg_class, pg_attribute 
+WHERE 
+  pg_class.oid = 'distribution.%s'::regclass AND
+  indrelid = pg_class.oid AND
+  pg_attribute.attrelid = pg_class.oid AND 
+  pg_attribute.attnum = any(pg_index.indkey)
+  AND indisprimary;""" %table
+            queryPM = QSqlQuery(self.db) ;
+            textPM = queryPM.exec_(textPM);
+            while (queryPM.next()):
+                primaryKey = queryPM.value(0)
+                print primaryKey
             text = "SELECT column_name, data_type\
     FROM information_schema.columns \
     WHERE table_name = '%s' \
     ORDER BY ordinal_position;" %table
             query = QSqlQuery(self.db) ;
             test = query.exec_(text);
+            attributesList = []
             while (query.next()):
-                dicType[table,query.value(0)] = query.value(1)
                 attributesList.append(query.value(0))
-                # for text fields, check if there are multilines
-                if query.value(1) == u'text' or query.value(1) == u'character varying':
+                if query.value(0) == primaryKey:
+                    dicType[table,query.value(0)] = 'primaryKey'
+                    # for text fields, check if there are multilines
+                elif query.value(1) == u'text' or query.value(1) == u'character varying':
                     textLen = """
                     SELECT max (length) 
                     FROM (SELECT character_length(%s) 
@@ -556,7 +661,12 @@ class yieldMainWindow(QtGui.QMainWindow):
                     while (queryLen.next()):
                         if queryLen.value(0) > 40:
                             dicType[table,query.value(0)] = 'longText'
+                        else:
+                            dicType[table,query.value(0)] = query.value(1)
+                else: 
+                    dicType[table,query.value(0)] = query.value(1)                            
             dicAtt[table] = attributesList
+            print attributesList
         return dicAtt, dicType
     
     def getDicCombo(self):
@@ -602,6 +712,21 @@ WHERE constraint_type = 'FOREIGN KEY' AND tc.table_name='%s';""" %table
         # These columns are therefore not the targets of triggers !
         """SELECT * FROM information_schema.triggered_update_columns WHERE event_object_table = 'od_pipe';"""
 
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QtGui.QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
+    
+    def initProgressBar(self):
+        
+        self.bar = progress_bar();self.bar.center();self.bar.show()
+        self.bar.progressBar = self.bar.ui_progbar.progressBar
+        self.bar.progressBar.setValue(0)
+        self.progress = 0; 
+        self.barInc = 1.0/self.barCount*100.0
+        self.barInc = 1.0/self.barCount*100.0
+
 
 class progress_bar(QtGui.QWidget):
     def __init__(self):
@@ -614,35 +739,8 @@ class progress_bar(QtGui.QWidget):
         cp = QtGui.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
-        """
-            att = 'remark'
-            tab1 = QgsAttributeEditorContainer("my first tab", layer)
-            tab2 = QgsAttributeEditorContainer("my secound tab", layer)
-            container = QgsAttributeEditorContainer("my continer", layer)
-            tab1.addChildElement(container)
-            widget1 = QgsAttributeEditorField('remark', layer.fieldNameIndex('remark'), layer);
-            widget2 = QgsAttributeEditorField('id', layer.fieldNameIndex('id'), layer);
-            widget3 = QgsAttributeEditorField('parcel', layer.fieldNameIndex('parcel'), layer);
-            container.addChildElement(widget1)
-            container.addChildElement(widget2)
-            tab2.addChildElement(widget3)
 
-            #container.addChildElement(widgetDef)
-            #elms.append(container)
 
-            layer.clearAttributeEditorWidgets()
-            layer.addAttributeEditorWidget(tab1)
-            layer.addAttributeEditorWidget(tab2)
-            #layer.addAttributeEditorWidget(widgetDef)
-            print layer.attributeEditorElements()  
-            layer.setEditorLayout(1)
-            
-            
-            
-            a = []
-            b = []
-            c = []
-            d = ''
-            e = layer.listStylesInDatabase(a,b,c,d)
-            if e > 0:
-                print a,b,c,d,e"""
+
+                
+                

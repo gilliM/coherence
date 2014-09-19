@@ -75,22 +75,17 @@ class Ui_YieldDialogBase(object):
         policy.setVerticalPolicy(4)
         self.checkStructureButton.setSizePolicy(policy)
         self.verticalLayout.addWidget(self.checkStructureButton)
-        
-        
-        """self.button_box = QtGui.QDialogButtonBox(YieldDialogBase)
-        self.button_box.setOrientation(QtCore.Qt.Horizontal)
-        self.button_box.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.button_box.setObjectName(_fromUtf8("button_box"))
-        self.gridLayout.addWidget(self.button_box, 5, 2, 1, 1)
 
-        
-        QtCore.QObject.connect(self.button_box, QtCore.SIGNAL(_fromUtf8("accepted()")), YieldDialogBase.accept)
-        QtCore.QObject.connect(self.button_box, QtCore.SIGNAL(_fromUtf8("rejected()")), YieldDialogBase.reject)
-        QtCore.QMetaObject.connectSlotsByName(YieldDialogBase)"""
-        
-        self.retranslateUi(YieldDialogBase)
-        
-        
+        self.configureInterfaceButton = QtGui.QCommandLinkButton(YieldDialogBase)
+        self.configureInterfaceButton.setObjectName(_fromUtf8("configureInterfaceButton"))
+        policy = self.configureInterfaceButton.sizePolicy()
+        policy.setVerticalPolicy(4)
+        self.configureInterfaceButton.setSizePolicy(policy)
+        self.verticalLayout.addWidget(self.configureInterfaceButton)
+    
+        self.retranslateUi(YieldDialogBase)    
+        self.reloadLayersButton.setFocus()
+        self.reloadLayersButton.setDefault(True)
 
     def retranslateUi(self, YieldDialogBase):
         YieldDialogBase.setWindowTitle(_translate("YieldDialogBase", "Get some coherence", None))
@@ -98,4 +93,5 @@ class Ui_YieldDialogBase(object):
         self.reloadLayersButton.setText(_translate("YieldDialogBase", "Reload layers", None))
         self.refreshStructureButton.setText(_translate("YieldDialogBase", "Refresh links", None))
         self.checkStructureButton.setText(_translate("YieldDialogBase", "Check coherence", None))
+        self.configureInterfaceButton.setText(_translate("YieldDialogBase", "Configure Interface", None))
 

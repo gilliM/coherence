@@ -31,6 +31,7 @@ from qgis.core import *
 from qgis.gui import *
 import random
 from PyQt4.QtSql import *
+from init_db_dialog import iniDbDialog
 
 import site
 
@@ -145,27 +146,42 @@ class yieldMain:
         #sudo apt-get install libqt4-sql-psql
         
         db = QSqlDatabase.addDatabase("QPSQL","first2");
+        self.initUi = iniDbDialog()
+        self.initUi.show()
+        self.initUi.ui.tHostName.setText("localhost");
+        self.initUi.ui.tDbName.setText("yield_db");
+        self.initUi.ui.tUserName.setText("postgres");
+        self.initUi.ui.tPassword.setText("postgres");
+        self.initUi.ui.tPort.setText('5432')
+        res = self.initUi.exec_()
+
         """db.setHostName("sige-demo");
         db.setDatabaseName("sige");
         db.setUserName("sige");
         db.setPassword("sige");"""
-        db.setHostName("localhost");
-        db.setDatabaseName("yield_db");
-        db.setUserName("postgres");
-        db.setPassword("postgres");
-        db.setPort(5432)
-        ok = db.open();
-        if ok:
-            QMessageBox.information(QDialog(), "Database status", "Database is connected")        
-            self.mw.db = db
-            #print db.lastError().databaseText()
-            #print db.lastError().driverText()
-    
-            self.mw.show()
+        
+
             
-            ## Run the dialog event loop
+        if res:
+            db.setHostName(self.initUi.ui.tHostName.text());
+            db.setDatabaseName(self.initUi.ui.tDbName.text());
+            db.setUserName(self.initUi.ui.tUserName.text());
+            db.setPassword(self.initUi.ui.tPassword.text());
+            db.setPort(int(self.initUi.ui.tPort.text()))
+            self.initUi = None
             
-        else:
-            QMessageBox.critical(QDialog(), "Database status", "Connection failed")   
+            ok = db.open();
+            if ok:
+                QMessageBox.information(QDialog(), "Database status", "Database is connected")        
+                self.mw.db = db
+                #print db.lastError().databaseText()
+                #print db.lastError().driverText()
+        
+                self.mw.show()
+                
+                ## Run the dialog event loop
+                
+            else:
+                QMessageBox.critical(QDialog(), "Database status", "Connection failed")   
 
 
