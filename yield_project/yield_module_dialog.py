@@ -136,27 +136,27 @@ class yieldMainWindow(QtGui.QMainWindow):
     
     def addGroups(self, list, parent = None):
         for group1 in list:
-                if group1[0] != 'layer':
-                    if len(group1) > 2:
-                        index = self.iface.legendInterface().addGroup(group1[2], True, parent)
-                    else:
-                        index = self.iface.legendInterface().addGroup(group1[0], True, parent)
-                    self.addGroups(group1[1], index)
+            if group1[0] == 'groupe':
+                if len(group1) > 2:
+                    index = self.iface.legendInterface().addGroup(group1[2], True, parent)
                 else:
-                    dicInfoLayer = dict((key, value) for (key, value) in group1[1])
-                    if 'source' not in dicInfoLayer:
-                        QMessageBox.warning(QDialog(),'configuration', "Source not defined for a layer")
-                        raise IOError
-                    source = dicInfoLayer['source']
-                    layer = self.loadTable(source)
-                    self.iface.legendInterface().moveLayer(layer, parent)
-                    if 'name' in dicInfoLayer:
-                        nomTemp = dicInfoLayer['name']
-                        nom = ''.join(chr(ord(c)) for c in nomTemp).decode('utf8')
-                        layer.setLayerName(nom)
-                    if 'symbology' in dicInfoLayer:
-                        style = dicInfoLayer['symbology']
-                        self.getSymbology(layer, style)
+                    index = self.iface.legendInterface().addGroup(group1[0], True, parent)
+                self.addGroups(group1[1], index)
+            elif group1[0] == 'layer':
+                dicInfoLayer = dict((key, value) for (key, value) in group1[1])
+                if 'source' not in dicInfoLayer:
+                    QMessageBox.warning(QDialog(),'configuration', "Source not defined for a layer")
+                    raise IOError
+                source = dicInfoLayer['source']
+                layer = self.loadTable(source)
+                self.iface.legendInterface().moveLayer(layer, parent)
+                if 'name' in dicInfoLayer:
+                    nomTemp = dicInfoLayer['name']
+                    nom = ''.join(chr(ord(c)) for c in nomTemp).decode('utf8')
+                    layer.setLayerName(nom)
+                if 'symbology' in dicInfoLayer:
+                    style = dicInfoLayer['symbology']
+                    self.getSymbology(layer, style)
                         
     def reloadLayers(self):
         self.tables = []

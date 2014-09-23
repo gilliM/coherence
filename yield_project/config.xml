@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <config name="configuration file for yield plugin">
-  <DPFE>
+  <groupe groupname= 'DPFE'>
     <groupe groupname= 'Hello World'>
       <groupe  groupname= 'Inside Group'>
         <layer>
 	        <source>od_fouille</source>
           <name>fouilles</name>
-          <symbology>fouilles symboles</symbology>
+          <symbology>newTab</symbology>
+          <form>
+            <container type="tab" name="my tab"> 
+              <container type="group" name="my group"> 
+                <field id="name" /> 
+              </container>
+            </container>
+            <container type="tab" name="my tab 2">
+              <field id="description" /> 
+            </container>
+          </form>
         </layer>
         <layer>
 	        <source>demande</source>
@@ -28,5 +38,5 @@
         <source>etat</source>
       </layer>
     </groupe>
-  </DPFE>
+  </groupe>
 </config>
